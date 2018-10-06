@@ -12,6 +12,10 @@ RUN chmod a+x /tmp/update.sh && /tmp/update.sh
 RUN curl -s https://packagecloud.io/install/repositories/erlang-solutions/riak/script.rpm.sh | bash
 RUN yum install -y riak
 
+# Install Riak Explorer
+RUN curl -sSL https://github.com/basho-labs/riak_explorer/releases/download/1.4.1/riak_explorer-1.4.1.patch-centos-7.tar.gz | tar -zxf - -C $RIAK_HOME --strip-components 2
+RUN for f in riak_pb riak_kv riak_ts riak_dt riak_search riak_yokozuna;do rm -f $RIAK_HOME/lib/basho-patches/$f*; done
+
 # Expose default ports
 EXPOSE 8087
 EXPOSE 8098
@@ -34,5 +38,5 @@ WORKDIR /var/lib/riak
 
 CMD ["/usr/lib64/riak/riak-cluster.sh"]
 
-# Clean up APT cache
-RUN rm -rf /var/lib/apt/lists/* /tmp/*
+# Clean up 
+RUN rm -rf /var/lib/riak/ring/* /tmp/*

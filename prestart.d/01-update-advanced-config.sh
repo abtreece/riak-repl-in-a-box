@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Add standard config items
-cat <<END >$ADVANCED_CONF
+cat <<END >$RIAK_ADVANCED_CONF
 [
  {riak_core,
   [

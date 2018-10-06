@@ -62,6 +62,7 @@ yum -y install \
   iproute \
   iptables \
   iputils \
+  jq \
   kbd \
   kbd-misc \
   kernel \
@@ -87,6 +88,7 @@ yum -y install \
   libyaml \
   logrotate \
   mingetty \
+  nc \
   net-tools \
   newt \
   newt-python27 \

@@ -1,23 +1,23 @@
 version: "3"
 services:
   coordinator:
-    image: riak-kv:latest
+    image: abtreece/riak-kv:latest
     ports:
       - "8087:8087"
       - "8098:8098"
     environment:
-      - CLUSTER_NAME=riak
+      - CLUSTER_NAME=riak-east-1
     labels:
-      - "com.basho.riak.cluster.name=riak"
+      - "com.basho.riak.cluster.name=riak-east-1"
     volumes:
       - schemas:/etc/riak/schemas
   member:
-    image: riak-kv:latest
+    image: abtreece/riak-kv:latest
     ports:
       - "8087"
       - "8098"
     labels:
-      - "com.basho.riak.cluster.name=riak"
+      - "com.basho.riak.cluster.name=riak-east-1"
     links:
       - coordinator
     depends_on:

@@ -1,0 +1,60 @@
+version: "3"
+services:
+  coordinator-east:
+    image: abtreece/riak-kv:latest
+    ports:
+      - "8087:8087"
+      - "8098:8098"
+    environment:
+      - CLUSTER_NAME=riak-east-1
+    labels:
+      - "com.basho.riak.cluster.name=riak-east-1"
+    volumes:
+      - schemas:/etc/riak/schemas
+  coordinator-west:
+    image: abtreece/riak-kv:latest
+    ports:
+      - "8087"
+      - "8098"
+    environment:
+      - CLUSTER_NAME=riak-west-1
+    labels:
+      - "com.basho.riak.cluster.name=riak-west-1"
+    volumes:
+      - schemas:/etc/riak/schemas
+  member-east:
+    image: abtreece/riak-kv:latest
+    ports:
+      - "8087"
+      - "8098"
+    labels:
+      - "com.basho.riak.cluster.name=riak-east-1"
+    links:
+      - coordinator-east
+    depends_on:
+      - coordinator-east
+    environment:
+      - CLUSTER_NAME=riak-east-1
+      - COORDINATOR_NODE=coordinator-east
+  member-west:
+    image: abtreece/riak-kv:latest
+    ports:
+      - "8087"
+      - "8098"
+    labels:
+      - "com.basho.riak.cluster.name=riak-west-1"
+    links:
+      - coordinator-west
+    depends_on:
+      - coordinator-west
+    environment:
+      - CLUSTER_NAME=riak-west-1
+      - COORDINATOR_NODE=coordinator-west
+
+volumes:
+  schemas:
+    external: false
+
+networks:
+  repl-net:
+    driver: bridge

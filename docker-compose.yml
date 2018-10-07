@@ -7,6 +7,7 @@ services:
       - "8098:8098"
     environment:
       - CLUSTER_NAME=riak-east-1
+      - REPL_CLUSTER_NAME=riak-west-1
     labels:
       - "com.basho.riak.cluster.name=riak-east-1"
     volumes:
@@ -18,6 +19,7 @@ services:
       - "8098"
     environment:
       - CLUSTER_NAME=riak-west-1
+      - REPL_CLUSTER_NAME=riak-east-1
     labels:
       - "com.basho.riak.cluster.name=riak-west-1"
     volumes:
@@ -54,7 +56,3 @@ services:
 volumes:
   schemas:
     external: false
-
-networks:
-  repl-net:
-    driver: bridge

@@ -3,11 +3,15 @@ services:
   coordinator-east:
     image: abtreece/riak-kv:latest
     ports:
-      - "8087:8087"
-      - "8098:8098"
+      - "4369"
+      - "18087:8087"
+      - "18098:8098"
+      - "8099"
+      - "9080"
     environment:
       - CLUSTER_NAME=riak-east-1
       - REPL_CLUSTER_NAME=riak-west-1
+      - REPL_COORDINATOR_NODE=coordinator-west
     labels:
       - "com.basho.riak.cluster.name=riak-east-1"
     volumes:
@@ -15,11 +19,15 @@ services:
   coordinator-west:
     image: abtreece/riak-kv:latest
     ports:
-      - "8087"
-      - "8098"
+      - "4369"
+      - "28087:8087"
+      - "28098:8098"
+      - "8099"
+      - "9080"
     environment:
       - CLUSTER_NAME=riak-west-1
       - REPL_CLUSTER_NAME=riak-east-1
+      - REPL_COORDINATOR_NODE=coordinator-east
     labels:
       - "com.basho.riak.cluster.name=riak-west-1"
     volumes:
@@ -27,8 +35,11 @@ services:
   member-east:
     image: abtreece/riak-kv:latest
     ports:
+      - "4369"
       - "8087"
       - "8098"
+      - "8099"
+      - "9080"
     labels:
       - "com.basho.riak.cluster.name=riak-east-1"
     links:
@@ -41,8 +52,11 @@ services:
   member-west:
     image: abtreece/riak-kv:latest
     ports:
+      - "4369"
       - "8087"
       - "8098"
+      - "8099"
+      - "9080"
     labels:
       - "com.basho.riak.cluster.name=riak-west-1"
     links:

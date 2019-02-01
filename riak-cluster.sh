@@ -17,6 +17,7 @@ if [[ -x /usr/sbin/riak-admin ]]; then
 else
   export RIAK_ADMIN=$RIAK_HOME/bin/riak-admin
 fi
+export RIAK_REPL=/usr/sbin/riak-repl
 export SCHEMAS_DIR=/etc/riak/schemas/
 
 # Set ports for PB and HTTP

@@ -1,7 +1,7 @@
 version: "3"
 services:
   coordinator-east:
-    image: abtreece/riak-kv:latest
+    image: abtreece/riak-kv:2.9.10
     ports:
       - "4369"
       - "18087:8087"
@@ -17,7 +17,7 @@ services:
     volumes:
       - schemas:/etc/riak/schemas
   coordinator-west:
-    image: abtreece/riak-kv:latest
+    image: abtreece/riak-kv:2.9.10
     ports:
       - "4369"
       - "28087:8087"
@@ -33,7 +33,7 @@ services:
     volumes:
       - schemas:/etc/riak/schemas
   member-east:
-    image: abtreece/riak-kv:latest
+    image: abtreece/riak-kv:2.9.10
     ports:
       - "4369"
       - "8087"
@@ -50,7 +50,7 @@ services:
       - CLUSTER_NAME=riak-east-1
       - COORDINATOR_NODE=coordinator-east
   member-west:
-    image: abtreece/riak-kv:latest
+    image: abtreece/riak-kv:2.9.10
     ports:
       - "4369"
       - "8087"

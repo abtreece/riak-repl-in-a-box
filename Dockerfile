@@ -1,16 +1,16 @@
-FROM amazonlinux:2018.03
+FROM amazonlinux:latest
+FROM --platform=linux/amd64 amazonlinux:latest
 
 ENV OS_FAMILY centos
-ENV OS_VERSION 6
+ENV OS_VERSION 7
 
-ENV RIAK_VERSION 2.2.6
+ENV RIAK_VERSION 2.9.10
 ENV RIAK_HOME /usr/lib64/riak
 ENV RIAK_FLAVOR KV
 
 COPY update.sh /tmp/update.sh
 RUN chmod a+x /tmp/update.sh && /tmp/update.sh
-RUN curl -s https://packagecloud.io/install/repositories/erlang-solutions/riak/script.rpm.sh | bash
-RUN yum install -y riak
+RUN yum install -y https://files.tiot.jp/riak/kv/2.9/2.9.10/amazon/2/riak-2.9.10-1.amzn2.x86_64.rpm
 
 # Install Riak Explorer
 RUN curl -sSL https://github.com/basho-labs/riak_explorer/releases/download/1.4.1/riak_explorer-1.4.1.patch-centos-7.tar.gz | tar -zxf - -C $RIAK_HOME --strip-components 2
